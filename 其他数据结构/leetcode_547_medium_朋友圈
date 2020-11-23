@@ -1,0 +1,119 @@
+### leetcode_547_medium_朋友圈
+
+![image-20201112183940797](leetcode_547_medium_朋友圈.assets/image-20201112183940797.png)
+
+### DFS方法
+
+对于每一个学生，如果尚未被标记为visited==true，用DFS深度优先访问其所有朋友，并标记为visited=true。
+
+纪录朋友圈的数量。
+
+```c++
+class Solution {
+public:
+	int findCircleNum(vector<vector<int>>& M) {
+		int result = 0;
+		vector<bool> visited(M.size(), false);
+		for (int index = 0; index < M.size(); index++)
+		{
+			if (!visited[index])
+			{
+				DFS(index, M, visited);
+				result++;
+			}
+		}
+		return result;
+	}
+
+	//查询第n个学生的朋友圈
+	void DFS(int index,vector<vector<int>>& M,vector<bool>& visited)
+	{
+		visited[index] = true;
+		for (int j = 0; j < M.size(); j++)
+		{
+			if (visited[j])
+				continue;
+			if (M[index][j] == 0)
+				continue;
+			DFS(j, M, visited);
+		}
+	}
+};
+```
+
+![image-20201116104914268](leetcode_547_medium_朋友圈.assets/image-20201116104914268.png)
+
+### 并查集方法
+
+```c++
+class DisjointSet {
+public:
+	DisjointSet(int size)
+	{
+		for (int i = 0; i < size; i++)
+		{
+			m_id.push_back(i);
+			m_size.push_back(1);
+			m_nCount = size;
+		}
+	}
+
+	int count() { return m_nCount; }
+
+	int find(int elem)  //查询元素属于哪个集合 O(1)
+	{
+		while (elem!=m_id[elem])
+		{
+			m_id[elem] = m_id[m_id[elem]];  //压缩树
+			elem = m_id[elem];
+		}
+		return elem;
+	}
+
+	void unionSets(int elem1, int elem2)  //合并两个元素所属的集合 O(n)
+	{
+		int root1, root2;
+		root1 = this->find(elem1);
+		root2 = this->find(elem2);
+		if (root1 == root2)
+			return;
+		//将小树合并到大树上
+		if (m_size[elem1] <= m_size[elem2])
+		{
+			m_id[root1] = root2;
+			m_size[root2] += m_size[root1];
+		}
+		else
+		{
+			m_id[root2] = root1;
+			m_size[root1] += m_size[root2];
+		}
+		m_nCount--;
+	}
+
+private:
+	vector<int> m_id;  //指示当前元素属于的集合序号
+	vector<int> m_size;  //指示以当前元素为根节点的树，其总的元素个数
+	int m_nCount;  //当前集合数量
+};
+
+class Solution {
+public:
+	int findCircleNum(vector<vector<int>>& M) {
+		int i, j;
+		int size = M.size();
+		DisjointSet set(size);
+		for (i = 0; i < size; i++)
+		{
+			for (j = i + 1; j < size; j++)
+			{
+				if (M[i][j])
+					set.unionSets(i, j);
+			}
+		}
+		return set.count();
+	}
+};
+```
+
+![image-20201116104931261](leetcode_547_medium_朋友圈.assets/image-20201116104931261.png)
