@@ -1,0 +1,43 @@
+### leetcode_26_easy_删除排序数组中的重复项
+
+![image-20201203203222388](leetcode_26_easy_删除排序数组中的重复项.assets/image-20201203203222388.png)
+
+![image-20201203203248920](leetcode_26_easy_删除排序数组中的重复项.assets/image-20201203203248920.png)
+
+```c++
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+
+    }
+};
+```
+
+#### 算法思路
+
+使用两个指针。
+
+- 一个指针i，用来维护数组前面的，非重复元素，i指向最新发现的一个数。
+
+- 另一个指针j，用来迭代地访问每一个数。
+
+- 每当找到一个新的数，就添加到i处。
+
+  ```c++
+  class Solution {
+  public:
+  	int removeDuplicates(vector<int>& nums) {
+  		int i, j;  //i指向已找到的非重复元素的末尾，j指向当前访问到的元素
+  		if (nums.empty())
+  			return 0;
+  		for (i = 0, j = 1; j < nums.size(); j++)
+  		{
+  			if (nums[i] != nums[j])
+  				nums[++i] = nums[j];
+  		}
+  		return i + 1;
+  	}
+  };
+  ```
+
+  

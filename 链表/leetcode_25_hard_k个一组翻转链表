@@ -1,0 +1,100 @@
+### leetcode_25_hard_k个一组翻转链表
+
+![image-20201203190227681](leetcode_25_hard_k个一组翻转链表.assets/image-20201203190227681.png)
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        
+    }
+};
+```
+
+#### 算法思路
+
+k个一组翻转链表，那么 将翻转长度为k的链表封装为一个函数，可以省下一些工作量。
+
+##### 翻转长度为k的链表
+
+翻转长度为k的链表，如下操作
+
+1. 计算长度，<k则无需进行翻转操作。注意，只要发现长度>k 就需要进行翻转，无需计算长度到底有多长
+2. 从第1个节点开始（下标从0开始），依次翻转链表，**翻转链表的一般步骤**如下：
+   1. 记录当前节点的后继 pNext=pCur->next;
+   2. 修改当前节点的next指针 pCur->next=pFormer;
+   3. 记录当前节点，将来用于作下个节点的前驱 pFormer=pCur;
+   4. 节点向下迭代 pCur=pNext;
+3. 翻转第0个节点 pHead->next=pNext;
+4. 返回翻转后的头结点 return pFormer;
+
+##### k个一组翻转链表
+
+在主函数中，依次翻转每一组链表。当迭代到节点pCur时，将要翻转pCur后面的k个节点。
+
+注意循环终止的条件。如果后面0~k个节点，翻转后的头结点与翻转前的头结点相同，则意味着并没有进行过翻转操作。也就意味着循环可以终止
+
+```c++
+class Solution {
+public:
+	ListNode* reverseLengthKList(ListNode* pHead, int k)  //翻转长度为k的链表 (长度<k则不翻转),返回翻转后的头结点
+	{
+		int length = 0, i;
+		ListNode *pCur, *pFormer, *pNext;  //翻转后的链表头结点
+
+		//计算链表长度
+		pCur = pHead;
+		while (pCur&&length < k)
+		{
+			length++;
+			pCur = pCur->next;
+		}
+		if (length < k)
+			return pHead;
+		//翻转链表
+		pFormer = pHead;
+		pCur = pHead->next;
+		pNext = pHead->next;  //适用于翻转长度为1的链表
+		for (i = 1; i < k; i++)  //翻转第[1,k-1]个节点  下标从0开始
+		{
+			pNext = pCur->next;
+			pCur->next = pFormer;
+			pFormer = pCur;
+			pCur = pNext;
+		}
+		pHead->next = pNext;  //翻转原链表的头结点
+		return pFormer;  //返回翻转后的头结点
+	}
+
+	ListNode* reverseKGroup(ListNode* head, int k) {
+		ListNode* pCur, *pPreHead, *pTemp;
+		ListNode* pNewHead;  //用于存储长度<=k的一组链表，翻转后的头结点
+
+		pPreHead = new ListNode(-1);
+		pPreHead->next = head;
+		if (k <= 1)
+			return head;
+
+		pCur = pPreHead;
+		//每次将pCur后面的k个节点翻转(不包括pCur)
+		while (pCur->next != (pNewHead = reverseLengthKList(pCur->next, k)))  //如果翻转后的头结点与翻转前的头结点不一致，这意味着后面的节点数=k,即正常地进行了翻转
+		{
+			pTemp = pCur->next;  //暂存翻转之前，k个节点的头结点
+			pCur->next = pNewHead;
+			pCur = pTemp;
+		}
+		return pPreHead->next;
+	}
+};
+```
+
