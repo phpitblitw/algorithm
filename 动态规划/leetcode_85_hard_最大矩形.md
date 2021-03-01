@@ -25,11 +25,11 @@ public:
 
 对于每一个位置(y,x)，以它作为矩形的右下端点，向上查找，找到最大的矩形。
 
-![image-20210102194307167](Untitled.assets/image-20210102194307167.png)
+![image-20210102194307167](leetcode_85_hard_最大矩形.assets/image-20210102194307167.png)
 
 该方法时间复杂度O(width^2*height)
 
-![image-20210102195309705](Untitled.assets/image-20210102195309705.png)
+![image-20210102195309705](leetcode_85_hard_最大矩形.assets/image-20210102195309705.png)
 
 #### 单调栈
 
