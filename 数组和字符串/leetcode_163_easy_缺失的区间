@@ -1,0 +1,48 @@
+### leetcode_163_easy_缺失的区间
+
+![image-20210213171458676](leetcode_163_easy_缺失的区间.assets/image-20210213171458676.png)
+
+```c++
+class Solution {
+public:
+    vector<string> findMissingRanges(vector<int>& nums, int lower, int upper) {
+        
+    }
+};
+```
+
+#### 算法思路
+
+先对数组元素排序，然后一个个写入缺失区间
+
+```c++
+class Solution {
+public:
+	vector<string> findMissingRanges(vector<int>& nums, int lower, int upper) {
+		int i, l, r;
+		sort(nums.begin(), nums.end());
+		vector<string> result;
+
+		if (nums.empty())
+			return { formRange(lower,upper) };
+		if (lower < nums[0])
+			result.push_back(formRange(lower, nums[0] - 1));
+		for (i = 0; i < nums.size() - 1; i++)
+			if (nums[i + 1] - nums[i] > 1)
+				result.push_back(formRange(nums[i] + 1, nums[i + 1] - 1));
+		if (nums[nums.size() - 1] < upper)
+			result.push_back(formRange(nums[nums.size() - 1] + 1, upper));
+		return result;
+	}
+
+	//使用闭区间上下界，构造字符串
+	string formRange(int l, int r)
+	{
+		if (l == r)
+			return to_string(l);
+		else
+			return to_string(l) + "->" + to_string(r);
+	}
+};
+```
+

@@ -1,6 +1,6 @@
 ### leetcode_70_easy_爬楼梯
 
-![image-20201224195741880](Untitled.assets/image-20201224195741880.png)
+![image-20210205120922466](leetcode_70_easy_爬楼梯.assets/image-20210205120922466.png)
 
 ```c++
 class Solution {
@@ -10,6 +10,8 @@ public:
     }
 };
 ```
+
+![image-20210205121018075](leetcode_70_easy_爬楼梯.assets/image-20210205121018075.png)
 
 #### dp算法
 

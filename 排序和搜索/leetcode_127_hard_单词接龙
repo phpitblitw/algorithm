@@ -1,0 +1,69 @@
+### leetcode_127_hard_单词接龙
+
+![image-20210118172044584](leetcode_127_hard_.assets/image-20210118172044584.png)
+
+![image-20210118172108491](leetcode_127_hard_.assets/image-20210118172108491.png)
+
+#### 算法思路
+
+leetcode_126_hard_单词接龙Ⅱ 的简化版。略
+
+```c++
+class Solution {
+public:
+	int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+		bool findNewWord;  //扩展节点标志位
+		int i,d,cIndex;
+		char letter;
+		string curWord, newWord;
+		unordered_map<string, int> distance;  //到达每个单词的距离
+		unordered_map<string, int>::iterator distanceIterator;
+
+		//初始化每个单词的距离
+		for (i = 0; i < wordList.size(); i++)
+			distance[wordList[i]] = INT_MAX;
+		distance[beginWord] = 0;
+		if (distance.find(endWord) == distance.end())
+			return 0;
+		//使用Dijkstra算法，计算到各个单词的距离
+		for (d = 0; d < wordList.size(); d++)  //以距离为d的单词为基础，扩展新单词
+		{
+			findNewWord = false;  //目前 这一轮尚未扩展任何节点
+			for (distanceIterator = distance.begin(); distanceIterator != distance.end(); distanceIterator++)
+			{
+				if (distanceIterator->second != d)
+					continue;
+				curWord = distanceIterator->first;
+				//寻找相邻的单词
+				for (cIndex = 0; cIndex < curWord.size(); cIndex++)  //尝试替换每个单词
+				{
+					for (letter = 'a'; letter <= 'z'; letter++)  //尝试替换成每一个字母
+					{
+						if (cIndex == 0)
+							newWord = letter + curWord.substr(1);
+						else
+							newWord = curWord.substr(0, cIndex) + letter + curWord.substr(cIndex + 1);
+						if (newWord == "hot")
+							int temp = 0;
+						if (distance.find(newWord) == distance.end())
+							continue;
+						if (distance[newWord] > d)  //发现了待扩展的单词
+						{
+							findNewWord = true;
+							distance[newWord] = d + 1;
+						}
+					}
+				}
+			}
+			if (!findNewWord)  //如果一轮没有扩展到任何新单词，则dijkstra算法结束
+				break;
+		}
+		//计算路径
+		if (distance[endWord] == INT_MAX)
+			return 0;
+		else
+			return distance[endWord] + 1;
+	}
+};
+```
+

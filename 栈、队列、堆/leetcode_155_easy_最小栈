@@ -1,0 +1,86 @@
+### leetcode_155_easy_最小栈
+
+![image-20210213104421239](leetcode_155_easy_最小栈.assets/image-20210213104421239.png)
+
+![image-20210213104447488](leetcode_155_easy_最小栈.assets/image-20210213104447488.png)
+
+![image-20210213104457786](leetcode_155_easy_最小栈.assets/image-20210213104457786.png)
+
+```c++
+class MinStack {
+public:
+    /** initialize your data structure here. */
+    MinStack() {
+
+    }
+    
+    void push(int x) {
+
+    }
+    
+    void pop() {
+
+    }
+    
+    int top() {
+
+    }
+    
+    int getMin() {
+
+    }
+};
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack* obj = new MinStack();
+ * obj->push(x);
+ * obj->pop();
+ * int param_3 = obj->top();
+ * int param_4 = obj->getMin();
+ */
+```
+
+#### 算法思路
+
+使用一个stack<in> m_data成员变量，维护基础的栈功能。
+
+对于检索最小元素这个功能，另外使用一个stack<int> m_minData成员变量。其栈顶元素就是目前的最小元素。该成员变量随着堆栈的变化而同步维护。具体见代码
+
+```c++
+class MinStack {
+public:
+	/** initialize your data structure here. */
+	MinStack() {
+		m_minData.push(INT_MAX);  //为了维护push操作的统一性
+	}
+
+	void push(int x) {
+		m_data.push(x);
+		if (x > m_minData.top())  //加入一个更大的元素，则不影响栈的最小值
+			;
+		else  //加入一个小于等于当前最小值的元素，则需同步更新最小值 (等于的情况需要加入，为了和pop操作统一)
+			m_minData.push(x);
+
+	}
+
+	void pop() {
+		if (m_data.top() == m_minData.top())
+			m_minData.pop();
+		m_data.pop();
+	}
+
+	int top() {
+		return m_data.top();
+	}
+
+	int getMin() {
+		return m_minData.top();
+	}
+
+private:
+	stack<int> m_data;
+	stack<int> m_minData;
+};
+```
+

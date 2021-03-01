@@ -1,8 +1,12 @@
 ### leetcode_85_hard_最大矩形
 
-![image-20210102191214049](Untitled.assets/image-20210102191214049.png)
+![image-20210205121935833](leetcode_85_hard_最大矩形.assets/image-20210205121935833.png)
 
-![image-20210102191224532](Untitled.assets/image-20210102191224532.png)
+![image-20210205121958990](leetcode_85_hard_最大矩形.assets/image-20210205121958990.png)
+
+![image-20210205122029849](leetcode_85_hard_最大矩形.assets/image-20210205122029849.png)
+
+![image-20210205122045965](leetcode_85_hard_最大矩形.assets/image-20210205122045965.png)
 
 ```c++
 class Solution {

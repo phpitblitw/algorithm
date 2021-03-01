@@ -1,0 +1,47 @@
+### leetcode_162_medium_寻找峰值
+
+![image-20210213163211290](leetcode_162_medium_寻找峰值.assets/image-20210213163211290.png)
+
+![image-20210213163241041](leetcode_162_medium_寻找峰值.assets/image-20210213163241041.png)
+
+```c++
+class Solution {
+public:
+    int findPeakElement(vector<int>& nums) {
+
+    }
+};
+```
+
+#### 算法思路
+
+要求O(logN)的时间复杂度，则需要二分查找
+
+因为nums[-1]=nums[n]=-∞，所以，nums数组中总是存在一个峰值的。对于nums数组中的最大值，其一定是一个峰值。
+
+判断mid是在一个上坡还是下坡处。
+
+- 如果nums[mid]<nums[mid+1]，则峰值在mid右侧
+- 如果nums[mid]>nums[mid+1]，则峰值在mid左侧
+
+```c++
+class Solution {
+public:
+	int findPeakElement(vector<int>& nums) {
+		int left, right, mid;
+
+		left = 0;
+		right = nums.size() - 1;
+		while (left < right)
+		{
+			mid = (left + right) / 2;  //向下取整
+			if (mid == nums.size() - 1 || nums[mid] < nums[mid + 1])  //如果mid处为上坡，则搜索右边
+				left = mid + 1;
+			else  //如果mid处为下坡 则搜索mid左边
+				right = mid;  //为了避免得到的right<left，故不作-1操作
+		}
+		return left;
+	}
+};
+```
+

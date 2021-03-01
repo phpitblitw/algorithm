@@ -35,7 +35,7 @@ public:
 
 以expandLeft为例。讨论expandLeft[i]
 
-对于heights[i-1]，则i-1柱子所能向左扩展的元素，也同样能够应用于i。所以，如果heights[i-1]<heights[i]，则可以expandLeft[i]+=expandLeft[i-1]。再继续向左扩展，同理
+对于heights[i-1]>heights[i]的情况，则i-1柱子所能向左扩展的元素，也同样能够应用于i。所以，如果heights[i-1]>heights[i]，则可以expandLeft[i]+=expandLeft[i-1]。再继续向左扩展，同理
 
 ##### 结果的计算
 
