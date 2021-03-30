@@ -20,7 +20,7 @@ public:
 1. 将左子树root->left展开为单链表
 2. 将右子树root->right展开为单链表
 3. 将左子树尾节点的后继，指向右子树
-4. 将root的右孩子 指向右子树
+4. 将root的右孩子 指向左子树
 
 ```c++
 class Solution {

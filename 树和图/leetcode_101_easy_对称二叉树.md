@@ -69,7 +69,7 @@ public:
 
 以上遍历用队列来实现。
 
-```
+```c++
 class Solution {
 public:
 	bool isSymmetric(TreeNode* root) {

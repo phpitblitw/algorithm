@@ -36,7 +36,7 @@ public:
 		return !(depth(root) == -1);
 	}
 
-	//计算树的深度。如果数非平衡的话，返回-1
+	//计算树的深度。如果树非平衡的话，返回-1
 	int depth(TreeNode* root)
 	{
 		int depthLeft, depthRight;

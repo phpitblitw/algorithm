@@ -92,3 +92,4 @@ public:
 };
 ```
 
+另外，头文件<string> 中 函数 int memcmp (const void *s1, const void *s2, size_t n); 比较s1 s2所指向的内存区间的前n个字符 是否相同。相同取0，s1小返回-1，s1大返回1

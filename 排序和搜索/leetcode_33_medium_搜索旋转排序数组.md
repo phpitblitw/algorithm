@@ -11,7 +11,7 @@ public:
 };
 ```
 
-#### 算法思路
+#### 寻找最小值点
 
 **二分查找**
 
@@ -62,6 +62,60 @@ public:
 	int searchNum(vector<int>& nums, int target, int left, int right)
 	{
 		int mid;
+		while (left <= right)
+		{
+			mid = (left + right) / 2;
+			if (target == nums[mid])
+				return mid;
+			else if (target < nums[mid])
+				right = mid - 1;
+			else
+				left = mid + 1;
+		}
+		return -1;
+	}
+};
+```
+
+#### 寻找最大值点
+
+注意二分查找的结束条件
+
+找到最小值点后，为了方便讨论 先讨论[minPos,nums.size()-1]这个区间
+
+```c++
+class Solution {
+public:
+	int search(vector<int>& nums, int target) {
+		int left, right, mid, minPos;
+
+        if(nums.size()==1)
+            return nums[0]==target?0:-1;
+		//找到最小值点
+		left = 0;
+		right = nums.size() - 1;
+		while (left < right)
+		{
+			mid = (left + right) / 2;  //中间位置，向下取整
+			//讨论右边一半区间，从而尽可能缩小讨论范围
+			if (nums[mid] > nums[right])  //右半区间无序，则最小值肯定在右半区间。且已知mid不是最小值
+				left = mid + 1;
+			else  //右半区间有序，则最小值在左边
+				right = mid;
+		}
+		minPos = left;
+		//找到target可能存在的子数组
+        if(target<=nums[nums.size()-1])  //右半区间
+        {
+            left=minPos;
+            right=nums.size()-1;
+        }
+        else
+        {
+            left=0;
+            right=max(minPos-1,0);  //考虑minPos为0的情况
+        }
+		//在有序子数组中，二分查找target
 		while (left <= right)
 		{
 			mid = (left + right) / 2;
