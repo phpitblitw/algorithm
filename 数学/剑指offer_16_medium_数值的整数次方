@@ -1,0 +1,48 @@
+### 剑指offer_16_medium_数值的整数次方
+
+![image-20210405171144692](剑指offer_16_medium_数值的整数次方.assets/image-20210405171144692.png)
+
+```c++
+class Solution {
+public:
+    double myPow(double x, int n) {
+
+    }
+};
+```
+
+#### 算法思路
+
+同 leetcode_50_medium_Pow 使用位运算处理
+
+```c++
+class Solution {
+public:
+    double myPow(double x, int n) {
+        long exp;
+        double multiplier,result;
+
+        //预处理 令n为非负数
+        exp=n;
+        if(exp<0)
+        {
+            x=1/x;
+            exp=-exp;
+        }
+        //累乘
+        multiplier=x;
+        result=1;
+        while(exp>0)
+        {
+            if(exp&1)
+            {
+                result*=multiplier;
+            }
+            multiplier*=multiplier;
+            exp=exp>>1;
+        }
+        return result;
+    }
+};
+```
+

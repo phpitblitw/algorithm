@@ -1,6 +1,6 @@
 ### leetcode_206_easy_反转链表
 
-![image-20210222112032009](Untitled.assets/image-20210222112032009.png)
+![image-20210222112032009](leetcode_206_easy_反转链表.assets/image-20210222112032009.png)
 
 ```c++
 class Solution {

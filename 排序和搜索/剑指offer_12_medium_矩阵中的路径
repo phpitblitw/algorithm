@@ -1,0 +1,59 @@
+### 剑指offer_12_medium_矩阵中的路径
+
+![image-20210401103834405](剑指offer_12_medium_矩阵中的路径.assets/image-20210401103834405.png)
+
+```c++
+class Solution {
+public:
+    bool exist(vector<vector<char>>& board, string word) {
+
+    }
+};
+```
+
+#### 算法思路
+
+同 leetcode_79_medium_单词搜索，DFS
+
+```c++
+class Solution {
+public:
+    bool exist(vector<vector<char>>& board, string word) {
+        height=board.size();
+        width=board[0].size();
+        int y,x;
+        vector<vector<bool>> visited(height,vector<bool>(width,false));
+        
+        for(y=0;y<height;y++)
+            for(x=0;x<width;x++)
+                if(DFS(board,visited,word,y,x,0))
+                    return true;
+        return false;
+    }
+
+    bool DFS(vector<vector<char>>& board,vector<vector<bool>>& visited,string &word,int y,int x,int index)
+    {
+        if(index==word.size())
+            return true;
+        if(y<0||y>=height||x<0||x>=width)
+            return false;
+        if(visited[y][x])
+            return false;
+        if(board[y][x]!=word[index])
+            return false;
+        visited[y][x]=true;
+        if(DFS(board,visited,word,y-1,x,index+1)
+        ||DFS(board,visited,word,y+1,x,index+1)
+        ||DFS(board,visited,word,y,x-1,index+1)
+        ||DFS(board,visited,word,y,x+1,index+1))
+            return true;
+        visited[y][x]=false;
+        return false;
+    }
+
+private:
+    int width;
+    int height;
+};
+```
+
